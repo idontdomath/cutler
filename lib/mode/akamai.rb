@@ -8,7 +8,6 @@ module Cutler
 			def setup
 				@purge_method = 'invalidate' # or remove
 				AkamaiApi.config.merge! :auth => [ @options["email"], @options["password"]]
-				puts @options
 			end
 
 			def options=(options)
@@ -20,7 +19,7 @@ module Cutler
 
 			def clean(url)
 				setup
-				response = AkamaiApi::Ccu.purge @purge_method.to_s, :arl, url
+				response = AkamaiApi::Ccu.purge @purge_method, :arl, url
 				return response.is_a?(Net::HTTPSuccess)
 
 			end
