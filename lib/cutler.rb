@@ -9,10 +9,12 @@ module Cutler
 	def mode=(mode)
 		case mode
 		when Symbol, String
-			require File.dirname(__FILE__) + "/mode/#{mode}"
-			@mode = Cutler::Mode.const_get("#{mode.to_s.capitalize}")
-		else
-			raise "Missing mode #{adapter_name}"  
+			begin
+				require File.dirname(__FILE__) + "/mode/#{mode}"
+				@mode = Cutler::Mode.const_get("#{mode.to_s.capitalize}")		
+			rescue Exception => e
+				raise "Missing mode #{mode}"				
+			end
 		end
 	end
 
